@@ -263,7 +263,7 @@ module deleteDeploymentScript 'br/public:avm/res/resources/deployment-script:0.5
 Remove-AzDeploymentScript -ResourceGroupName $env:varResourceGroupName -Name $env:varScriptName
 ```
 
-**Example deployment usage:**
+## Example deployment usage
 
 - Use the following inside or outside of the same script using the existing keyvault resource
 - Define the keyvault as an existing resource
