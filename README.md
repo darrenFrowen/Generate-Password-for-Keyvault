@@ -259,20 +259,18 @@ Remove-AzDeploymentScript -ResourceGroupName $env:varResourceGroupName -Name $en
 **Example deployment usage:**
 
 - Use the following inside or outside of the same script using the existing keyvault resource
+- Define the keyvault as an existing resource
 
 ```bicep
-adminPassword: keyVaultExisting.getSecret(secretName)
-```
-
-```bicep
-
-// Example Usage of the keyvault secret for VM deployment can be used outside or inside the same bicep file
-
-@description('This is where we are using and an existing Keyvault for VM deployment')
+@description('This is existing Keyvault resource for VM deployment')
 resource keyVaultExisting 'Microsoft.KeyVault/vaults@2019-09-01' existing = {
   name: keyVaultName
   scope: sharedResourceGroup
 }
+```
+This is how you referance the existing keyvault and the secret name
+
+```bicep
 
 @description('Example usage of the keyvault secret for VM deployment')
 module virtualMachine 'br/public:avm/res/compute/virtual-machine:0.11.0' = {
