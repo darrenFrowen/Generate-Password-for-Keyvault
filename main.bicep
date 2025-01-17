@@ -61,14 +61,6 @@ module deploymentScript 'br/public:avm/res/resources/deployment-script:0.5.1' = 
         name: 'varSecretName'
         value: secretName
       }
-      {
-        name: 'varResourceGroupName'
-        value: resourceGroupName
-      }
-      {
-        name: 'varScriptName'
-        value: scriptName
-      }
     ]
     scriptContent: '''
     # Check for an existing secret value to be recorded as an output 'existingSecret'
