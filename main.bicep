@@ -8,6 +8,8 @@ targetScope = 'subscription'
 @description('Required. Location for the deployment')
 param location string = '<location>'
 
+@description('Optional. Deploying user principle id for RBAC access to the keyvault')
+param deployUserPrincipleId string = '<userPrincipleId'
 @description('Optional. Resource group name.')
 param resourceGroupName string = 'rg-deployment-script'
 @description('Optional. User assigned identity name')
@@ -22,6 +24,7 @@ param scriptName string = 'generatePasswordKvSecret'
 param deleteScriptName string = 'deletedGeneratePasswordKvSecret'
 @description('Optional. UTC time value used to generate the secret')
 param utcValue string = utcNow()
+
 
 @description('This is the deployment script and shared keyvault resource group')
 resource sharedResourceGroup 'Microsoft.Resources/resourceGroups@2021-01-01' = {
@@ -115,7 +118,7 @@ module keyvault 'br/public:avm/res/key-vault/vault:0.11.1' = {
     roleAssignments: [
       {
         description: 'Allow the deploying user assigned identity to manage the key vault'
-        principalId: '0f32888d-7ae1-4643-a938-97d42a723c7c'
+        principalId: deployUserPrincipleId
         principalType: 'User'
         roleDefinitionIdOrName: 'Key Vault Administrator'
       }

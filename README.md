@@ -26,6 +26,7 @@ The target scope for this deployment is the subscription level.
 
 ### Optional Parameters
 
+- **deployUserPrincipleId**: Deploying user principle id for RBAC access to the keyvault
 - **resourceGroupName**: The name of the resource group.
 - **userAssignedIdentityName**: The name of the user-assigned identity.
 - **keyVaultName**: The name of the Key Vault.
@@ -175,7 +176,7 @@ module keyvault 'br/public:avm/res/key-vault/vault:0.11.1' = {
     roleAssignments: [
       {
         description: 'Allow the deploying user assigned identity to manage the key vault'
-        principalId: '0f32888d-7ae1-4643-a938-97d42a723c7c'
+        principalId: deployUserPrincipleId
         principalType: 'User'
         roleDefinitionIdOrName: 'Key Vault Administrator'
       }
