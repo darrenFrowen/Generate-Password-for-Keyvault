@@ -1,7 +1,7 @@
 # Deploys the Bicep template to Azure.
 
 # Required. Set the location for the deployment
-$location = "<location>"
+$location = "UK South"
 
 # Variables
 $templateFile = 'main.bicep'
