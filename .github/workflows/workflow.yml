@@ -19,9 +19,11 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-    - name: Check out repository code
-      uses: actions/checkout@v4
+    - name: Install Az PowerShell Module
+      run: |
+        pwsh -Command "Install-Module -Name Az -Force -Scope CurrentUser"
+        pwsh -Command "Import-Module Az"
 
-    - name: Deploy the keyvault with secret using dpeloyment scripts
+    - name: Run Deployment Script
       shell: pwsh
       run: ./deploy.ps1
