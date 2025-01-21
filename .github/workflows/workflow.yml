@@ -1,28 +1,49 @@
-name: deploy-secret-to-keyvault
-
+name: Deploy Azure Keyvault with secret generated from Azure deployment script
 on: [workflow_dispatch]
-
-permissions:
-  id-token: write
-  contents: read
-
+env:
 jobs:
-  deploy:
+  Validation_Stage_Validation:
     runs-on: ubuntu-latest
+    name: Validation
     steps:
-    - uses: actions/checkout@v3
-
-    - name: Azure Login
-      uses: azure/login@v1
+    - uses: actions/checkout@v2
+      name: Azure Login
       with:
         client-id: ${{ secrets.AZURE_CLIENT_ID }}
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-    - name: Import Az Module
-      run: |
-        pwsh -Command "Import-Module Az"
-
-    - name: Run Deployment Script
-      shell: pwsh
-      run: ./deploy.ps1
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        lfs: false
+        clean: true
+    - name: Azure PowerShell - What-If
+      uses: azure/powershell@v1
+      with:
+        inlineScript: ./deploy.ps1 -whatif
+        azPSVersion: latest
+        failOnStandardError: false
+  Deployment_Stage_Deployment:
+    runs-on: ubuntu-latest
+    name: Deployment
+    needs:
+    - Validation_Stage_Validation
+    if: (success('Validation') && (github.ref == 'refs/heads/main'))
+    steps:
+    - uses: actions/checkout@v2
+      name: Azure Login
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        lfs: false
+        clean: true
+    - name: Deployment - Azure Powershell
+      uses: azure/powershell@v1
+      with:
+        inlineScript: ./deploy.ps1
+        azPSVersion: latest
+                    
