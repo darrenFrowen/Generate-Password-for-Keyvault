@@ -19,9 +19,8 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-    - name: Install Az PowerShell Module
+    - name: Import Az Module
       run: |
-        pwsh -Command "Install-Module -Name Az -Force -Scope CurrentUser"
         pwsh -Command "Import-Module Az"
 
     - name: Run Deployment Script
