@@ -14,4 +14,6 @@ jobs:
     - uses: azure/powershell@v1
       with:
         deploymentName: ${{ github.run_number }}
-        template: ./deploy.ps1
+        azPSVersion: 'latest'
+        scriptType: 'filePath'
+        scriptPath: './deploy.ps1'
