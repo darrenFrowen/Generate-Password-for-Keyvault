@@ -22,7 +22,7 @@ The target scope for this deployment is the subscription level.
 
 ### Required Parameters
 
-- **location**: The location for the resources.
+- **location**: The location for the resources. Required in both main.bicep and deploy.ps1
 - **deployUserPrincipleId**: Deploying user principle id for RBAC access to the keyvault
 
 ### Optional Parameters
