@@ -1,4 +1,4 @@
-name: Deploy Azure Keyvault with secret generated from Azure deployment script
+name: deployment-script-keyvault
 
 on: [workflow_dispatch]
 
@@ -6,48 +6,23 @@ permissions:
   id-token: write
   contents: read
 
+env:
+    AZURE_RESOURCEGROUP_NAME: rg-deployment-script
+    ENVIRONMENT: nonprod
+
 jobs:
-  Validation_Stage_Validation:
+  deploy:
     runs-on: ubuntu-latest
-    name: Validation
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Azure Login
-      uses: azure/login@v1
+    - uses: actions/checkout@v3
+    - uses: azure/login@v1
       with:
         client-id: ${{ secrets.AZURE_CLIENT_ID }}
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-    - name: Azure PowerShell - What-If
-      uses: azure/powershell@v1
+    - uses: azure/arm-deploy@v1
       with:
-        inlineScript: |
-          Import-Module Az
-          ./deploy.ps1 -whatif
-        azPSVersion: latest
-        failOnStandardError: false
-
-  Deployment_Stage_Deployment:
-    runs-on: ubuntu-latest
-    name: Deployment
-    needs: Validation_Stage_Validation
-    if: success() && github.ref == 'refs/heads/main'
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Azure Login
-      uses: azure/login@v1
-      with:
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-    - name: Deployment - Azure PowerShell
-      uses: azure/powershell@v1
-      with:
-        inlineScript: |
-          Import-Module Az
-          ./deploy.ps1
-        azPSVersion: latest
+        deploymentName: ${{ github.run_number }}
+        resourceGroupName: ${{ env.AZURE_RESOURCEGROUP_NAME }}
+        template: ./main.bicep
+        parameters: environmentType=${{ env.ENVIRONMENT }}
