@@ -7,9 +7,9 @@ targetScope = 'subscription'
 
 // Required parameters
 @description('Required. Location for the deployment')
-param location string = '<location>'
+param location string = 'uksouth'
 @description('Rquired. Deploying user principle id for RBAC access to the keyvault')
-param deployUserPrincipleId string = '<deploying-user-principle-id>'
+param deployUserPrincipleId string = '0f32888d-7ae1-4643-a938-97d42a723c7c'
 
 // Optional parameters
 @description('Optional. Resource group name.')
