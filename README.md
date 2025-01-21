@@ -23,10 +23,10 @@ The target scope for this deployment is the subscription level.
 ### Required Parameters
 
 - **location**: The location for the resources.
+- **deployUserPrincipleId**: Deploying user principle id for RBAC access to the keyvault
 
 ### Optional Parameters
 
-- **deployUserPrincipleId**: Deploying user principle id for RBAC access to the keyvault
 - **resourceGroupName**: The name of the resource group.
 - **userAssignedIdentityName**: The name of the user-assigned identity.
 - **keyVaultName**: The name of the Key Vault.
@@ -88,14 +88,6 @@ module deploymentScript 'br/public:avm/res/resources/deployment-script:0.5.1' = 
       {
         name: 'varSecretName'
         value: secretName
-      }
-      {
-        name: 'varResourceGroupName'
-        value: resourceGroupName
-      }
-      {
-        name: 'varScriptName'
-        value: scriptName
       }
     ]
     scriptContent: '''
