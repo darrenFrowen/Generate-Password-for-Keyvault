@@ -1,6 +1,5 @@
 name: Deploy Azure Keyvault with secret generated from Azure deployment script
 on: [workflow_dispatch]
-env:
 jobs:
   Validation_Stage_Validation:
     runs-on: ubuntu-latest
