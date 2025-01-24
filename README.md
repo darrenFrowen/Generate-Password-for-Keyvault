@@ -311,30 +311,3 @@ module virtualMachine 'br/public:avm/res/compute/virtual-machine:0.11.0' = {
   }
 }
 ```
-
-### Deployment script
-
-- Add the following to your .ps1 deployment script and run the file .\deploy.ps1 with optional -WhatIf
-
-```powershell
-# Required. Set the location for the deployment
-$location = "<required>"
-
-# Variables
-$templateFile = 'main.bicep'
-$today = Get-Date -Format 'MM-dd-yyyy'
-$deploymentName = "deploymentscript-$today"
-
-# Deploy the Bicep template
-New-AzDeployment -Name $deploymentName `
-    -Location $location `
-    -TemplateFile $templateFile `
-    -Verbose #-WhatIf
-```
-
-### How to Use
-1. **Deploy the Script**: Deploy the Bicep script to your Azure subscription.
-
-```powershell
-.\deploy.ps1
-```
