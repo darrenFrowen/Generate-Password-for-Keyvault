@@ -20,20 +20,26 @@ For any further deployments, the deployment script checks if a secret allready e
 ### Target Scope
 The target scope for this deployment is the subscription level.
 
-### Required Parameters
+### Parameters used
 
-- **location**: The location for the resources. Required in both main.bicep and deploy.ps1
-- **deployUserPrincipleId**: Deploying user principle id for RBAC access to the keyvault
+```bicep
+// Required parameters
+@description('Required. Location for all resources.')
+param location string = '<location>'
+@description('Required. Existing Subnet ID for the VMs')
+param subnetId string = '<subnetResourceId>'
 
-### Optional Parameters
-
-- **resourceGroupName**: The name of the resource group.
-- **userAssignedIdentityName**: The name of the user-assigned identity.
-- **keyVaultName**: The name of the Key Vault.
-- **secretName**: The name of the secret to be stored in the Key Vault.
-- **scriptName**: The name of the deployment script that generates the secret.
-- **deleteScriptName**: The name of the deployment script that deletes the generatePasswordKvSecret script.
-- **utcValue**: The UTC time value used to generate the secret.
+// Optional parameters
+@description('Optional. Admin password for the VMs')
+@secure()
+param adminPassword string = newGuid()
+@description('Optional. Name for the Azure Disk Encryption Resources')
+param adeName string = 'vmAde'
+@description('Optional. Name for the Server Side Encryption Resources')
+param sseName string = 'vmSse'
+@description('Optional. Name for the Keyvault Key')
+param keyName string = 'encryptKey'
+```
 
 ### Resources
 
