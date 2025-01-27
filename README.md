@@ -19,21 +19,26 @@ The target scope for this deployment is the subscription level.
 
 ```bicep
 // Required parameters
-@description('Required. Location for all resources.')
+@description('Required. Location for the deployment')
 param location string = '<location>'
-@description('Required. Existing Subnet ID for the VMs')
-param subnetId string = '<subnetResourceId>'
+@description('Rquired. Deploying user principle id for RBAC access to the keyvault')
+param deployUserPrincipleId string = '<deployUserPrincipleId>'
 
 // Optional parameters
-@description('Optional. Admin password for the VMs')
-@secure()
-param adminPassword string = newGuid()
-@description('Optional. Name for the Azure Disk Encryption Resources')
-param adeName string = 'vmAde'
-@description('Optional. Name for the Server Side Encryption Resources')
-param sseName string = 'vmSse'
-@description('Optional. Name for the Keyvault Key')
-param keyName string = 'encryptKey'
+@description('Optional. Resource group name.')
+param resourceGroupName string = 'rg-deployment-script'
+@description('Optional. User assigned identity name')
+param userAssignedIdentityName string = 'uami-shared'
+@description('Optional. Keyvault name')
+param keyVaultName string = 'kv-shared-01'
+@description('Optional. Secret name')
+param secretName string = 'adminPasswordKvSecret'
+@description('Optional. Deployment Script name that generates the secret')
+param scriptName string = 'generatePasswordKvSecret'
+@description('Optional. Deployment Script name to delete the generatePasswordKvSecret script')
+param deleteScriptName string = 'deletedGeneratePasswordKvSecret'
+@description('Optional. UTC time value used to generate the secret')
+param utcValue string = utcNow()
 ```
 
 ### Resources
