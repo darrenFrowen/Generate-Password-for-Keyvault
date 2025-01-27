@@ -214,6 +214,7 @@ secrets: concat(
 ```
 
 #### 5. Deployment Script to Delete the Generate Secret Script
+
 This script deletes the generatePasswordKvSecret script and its outputs. This will be removed after the retentionInterval 1Hour (PT1H)
 
 ```bicep
@@ -274,6 +275,7 @@ resource keyVaultExisting 'Microsoft.KeyVault/vaults@2019-09-01' existing = {
   scope: sharedResourceGroup
 }
 ```
+
 Referance the existing keyvault and the secret name using 'getSecret' function.
 
 ```bicep
